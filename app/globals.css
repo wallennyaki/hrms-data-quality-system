@@ -1,15 +1,31 @@
 
+
 @import "tailwindcss";
 
 :root {
   color-scheme: light;
-  --background: #f1f5f9;
-  --foreground: #0f172a;
+
+  /* Main colour palette */
+  --background: #f4f5f7;
+  --foreground: #111827;
+
+  /* Corporate colours */
+  --black: #111111;
+  --navy: #172b4d;
+  --navy-light: #243b5a;
+  --primary: #2563eb;
+
+  /* Surface colours */
+  --white: #ffffff;
+  --light-grey: #f4f5f7;
+  --border: #e5e7eb;
+  --muted: #6b7280;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -17,10 +33,31 @@
 html {
   background: var(--background);
   color: var(--foreground);
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Consistent form styling */
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+/* Professional selection colour */
+::selection {
+  background: #dbeafe;
+  color: #172b4d;
+}
+
+/* Consistent borders */
+* {
+  box-sizing: border-box;
 }

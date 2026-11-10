@@ -122,54 +122,111 @@ export default function EmployeeDashboard() {
     }
   }
 
+  const inputClass =
+    "mt-2 w-full rounded-lg border border-[#3b3b3b] bg-[#080808] px-4 py-3 text-sm text-white outline-none placeholder:text-gray-600 focus:border-gray-400 focus:ring-1 focus:ring-gray-500";
+
+  const labelClass =
+    "block text-sm font-medium text-gray-300";
+
   return (
-    <main className="min-h-screen bg-slate-100 px-4 py-8 sm:px-8">
-      <div className="mx-auto max-w-5xl">
-        <header className="mb-8 rounded-xl bg-slate-900 p-6 text-white">
-          <p className="text-sm text-slate-300">
-            Human Resource Management System
-          </p>
-          <h1 className="mt-2 text-3xl font-bold">Employee Dashboard</h1>
-          <p className="mt-2 text-slate-300">
-            Review your information and confirm whether it is accurate.
-          </p>
+    <main className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#f5f6f8] via-[#dce0e6] to-[#aeb6c2] px-4 py-8 sm:px-8">
+
+      {/* Bright abstract background */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute -left-32 -top-32 h-[500px] w-[500px] rounded-full bg-white/80 blur-3xl" />
+        <div className="absolute -right-40 top-20 h-[550px] w-[550px] rounded-full bg-slate-400/40 blur-3xl" />
+        <div className="absolute -bottom-48 left-1/3 h-[500px] w-[500px] rounded-full bg-white/70 blur-3xl" />
+      </div>
+
+      <div className="relative mx-auto max-w-5xl">
+
+        {/* Header */}
+        <header className="overflow-hidden rounded-2xl border border-[#333] bg-gradient-to-r from-[#171717] via-[#090909] to-black p-7 text-white shadow-2xl sm:p-9">
+
+          <div className="flex items-center gap-4">
+            <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-[#444] bg-white text-lg font-bold text-black">
+              HR
+            </div>
+
+            <div>
+              <p className="text-sm font-semibold tracking-[0.2em]">
+                HRMS
+              </p>
+              <p className="mt-1 text-xs text-gray-500">
+                EMPLOYEE PORTAL
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-9">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
+              Human Resource Management System
+            </p>
+
+            <h1 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
+              Employee Dashboard
+            </h1>
+
+            <p className="mt-3 max-w-2xl text-sm leading-7 text-gray-400">
+              Review your employee information, confirm its accuracy
+              or request corrections through the HR department.
+            </p>
+          </div>
         </header>
 
         {loading ? (
-          <div className="rounded-xl bg-white p-8 text-slate-600 shadow-sm">
+          <div className="mt-6 rounded-xl border border-[#333] bg-[#101010] p-8 text-gray-300 shadow-xl">
             Loading your employee record...
           </div>
         ) : !employee ? (
           <div
             role="alert"
-            className="rounded-xl border border-red-200 bg-red-50 p-5 text-red-700"
+            className="mt-6 rounded-xl border border-red-900 bg-[#160909] p-5 text-red-400"
           >
             {message || "No employee record was returned."}
           </div>
         ) : (
           <>
-            <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-              <h2 className="text-xl font-semibold text-slate-900">
-                My Employee Record
-              </h2>
-              <p className="mt-2 text-sm text-slate-500">
+            {/* Employee information */}
+            <section className="mt-6 rounded-2xl border border-[#333] bg-[#101010] p-6 text-white shadow-xl sm:p-8">
+
+              <div className="flex flex-wrap items-center justify-between gap-4">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
+                    Personal Information
+                  </p>
+                  <h2 className="mt-2 text-2xl font-semibold">
+                    My Employee Record
+                  </h2>
+                </div>
+
+                <span className="rounded-full border border-[#444] bg-[#1b1b1b] px-4 py-2 text-xs font-medium text-gray-300">
+                  {employee.status || "Status unavailable"}
+                </span>
+              </div>
+
+              <p className="mt-3 text-sm leading-6 text-gray-500">
                 Review these details carefully. Official records cannot be
                 edited directly from this dashboard.
               </p>
 
-              <div className="mt-6 grid gap-5 sm:grid-cols-2">
+              <div className="mt-7 grid gap-4 sm:grid-cols-2">
                 {[
                   ["Employee ID", employee.employeeId],
                   ["Full Name", employee.name],
                   ["Department", employee.department],
                   ["Position", employee.position],
-                  ["Email", employee.email],
-                  ["Phone", employee.phone],
-                  ["Employment Status", employee.status],
+                  ["Email Address", employee.email],
+                  ["Phone Number", employee.phone],
                 ].map(([label, value]) => (
-                  <div key={label}>
-                    <p className="text-sm text-slate-500">{label}</p>
-                    <p className="mt-1 font-medium text-slate-900">
+                  <div
+                    key={label}
+                    className="rounded-lg border border-[#303030] bg-[#080808] p-4"
+                  >
+                    <p className="text-xs uppercase tracking-wider text-gray-500">
+                      {label}
+                    </p>
+                    <p className="mt-2 break-words font-medium text-white">
                       {value || "Not provided"}
                     </p>
                   </div>
@@ -177,28 +234,36 @@ export default function EmployeeDashboard() {
               </div>
             </section>
 
-            <section className="mt-6 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-              <h2 className="text-xl font-semibold text-slate-900">
+            {/* Verification section */}
+            <section className="mt-6 rounded-2xl border border-[#333] bg-[#101010] p-6 text-white shadow-xl sm:p-8">
+
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
+                Record Verification
+              </p>
+
+              <h2 className="mt-2 text-2xl font-semibold">
                 Verify Your Information
               </h2>
-              <p className="mt-2 text-sm text-slate-600">
+
+              <p className="mt-3 text-sm leading-7 text-gray-400">
                 If everything is correct, confirm your details. If something
                 is incorrect, submit a correction request for HR to review.
               </p>
 
               {verificationStatus && (
-                <p className="mt-4 rounded-lg bg-slate-100 p-3 text-sm text-slate-700">
+                <div className="mt-5 rounded-lg border border-[#444] bg-[#191919] p-4 text-sm text-gray-300">
                   Your current response:{" "}
-                  <strong>
+                  <strong className="text-white">
                     {verificationStatus.replaceAll("_", " ")}
                   </strong>
-                </p>
+                </div>
               )}
 
               {message && (
                 <p
                   role="status"
-                  className="mt-4 rounded-lg bg-blue-50 p-3 text-sm text-blue-800"
+                  aria-live="polite"
+                  className="mt-5 rounded-lg border border-blue-900/60 bg-blue-950/30 p-4 text-sm text-blue-300"
                 >
                   {message}
                 </p>
@@ -208,91 +273,91 @@ export default function EmployeeDashboard() {
                 type="button"
                 onClick={() => void submitVerification("CONFIRM")}
                 disabled={submitting}
-                style={{
-                  display: "block",
-                  width: "100%",
-                  padding: "14px",
-                  marginTop: "20px",
-                  backgroundColor: "#047857",
-                  color: "#ffffff",
-                  fontWeight: "bold",
-                  borderRadius: "8px",
-                  border: "2px solid #047857",
-                  cursor: submitting ? "wait" : "pointer",
-                }}
+                className="mt-6 w-full rounded-lg border border-emerald-600 bg-emerald-700 px-4 py-4 text-sm font-bold tracking-wide text-white transition hover:bg-emerald-600 disabled:cursor-not-allowed disabled:opacity-60"
               >
-                {submitting ? "Saving..." : "CONFIRM MY DETAILS"}
+                {submitting ? "SAVING..." : "CONFIRM MY DETAILS"}
               </button>
 
-              <div className="mt-8 border-t border-slate-200 pt-6">
-                <h3 className="text-lg font-semibold text-slate-900">
-                  Request a Correction
-                </h3>
-                <p className="mt-2 text-sm text-slate-600">
-                  Select the incorrect field, enter the value you believe is
-                  correct, and explain the issue. HR must review your request
-                  before the official record is changed.
+              {/* Correction request */}
+              <div className="mt-9 border-t border-[#303030] pt-7">
+
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
+                  Employee Support
                 </p>
 
-                <label
-                  htmlFor="correction-field"
-                  className="mt-5 block text-sm font-medium text-slate-700"
-                >
-                  Field to correct
-                </label>
-                <select
-                  id="correction-field"
-                  value={fieldName}
-                  onChange={(event) =>
-                    setFieldName(event.target.value as CorrectionField)
-                  }
-                  className="mt-2 w-full rounded-lg border border-slate-300 bg-white p-3 text-slate-900"
-                >
-                  {correctionFields.map((field) => (
-                    <option key={field.value} value={field.value}>
-                      {field.label}
-                    </option>
-                  ))}
-                </select>
+                <h3 className="mt-2 text-xl font-semibold">
+                  Request a Correction
+                </h3>
 
-                <div className="mt-4 rounded-lg bg-slate-50 p-4">
-                  <p className="text-sm text-slate-500">Current value</p>
-                  <p className="mt-1 font-medium text-slate-900">
+                <p className="mt-3 text-sm leading-7 text-gray-400">
+                  Select the incorrect field, enter the value you believe
+                  is correct, and explain the issue. HR must review your
+                  request before the official record is changed.
+                </p>
+
+                <div className="mt-6">
+                  <label htmlFor="correction-field" className={labelClass}>
+                    Field to correct
+                  </label>
+
+                  <select
+                    id="correction-field"
+                    value={fieldName}
+                    onChange={(event) =>
+                      setFieldName(event.target.value as CorrectionField)
+                    }
+                    className={inputClass}
+                  >
+                    {correctionFields.map((field) => (
+                      <option key={field.value} value={field.value}>
+                        {field.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="mt-5 rounded-lg border border-[#303030] bg-[#080808] p-4">
+                  <p className="text-xs uppercase tracking-wider text-gray-500">
+                    Current value
+                  </p>
+                  <p className="mt-2 font-medium text-white">
                     {currentValue || "Not provided"}
                   </p>
                 </div>
 
-                <label
-                  htmlFor="requested-value"
-                  className="mt-4 block text-sm font-medium text-slate-700"
-                >
-                  Requested correct value
-                </label>
-                <input
-                  id="requested-value"
-                  type="text"
-                  value={requestedValue}
-                  onChange={(event) => setRequestedValue(event.target.value)}
-                  maxLength={1000}
-                  placeholder="Enter the value you believe is correct"
-                  className="mt-2 w-full rounded-lg border border-slate-300 p-3 text-slate-900"
-                />
+                <div className="mt-5">
+                  <label htmlFor="requested-value" className={labelClass}>
+                    Requested correct value
+                  </label>
 
-                <label
-                  htmlFor="correction-comment"
-                  className="mt-4 block text-sm font-medium text-slate-700"
-                >
-                  Explanation
-                </label>
-                <textarea
-                  id="correction-comment"
-                  value={comment}
-                  onChange={(event) => setComment(event.target.value)}
-                  rows={4}
-                  maxLength={2000}
-                  placeholder="Explain why this information needs correcting."
-                  className="mt-2 w-full rounded-lg border border-slate-300 p-3 text-slate-900"
-                />
+                  <input
+                    id="requested-value"
+                    type="text"
+                    value={requestedValue}
+                    onChange={(event) =>
+                      setRequestedValue(event.target.value)
+                    }
+                    maxLength={1000}
+                    placeholder="Enter the value you believe is correct"
+                    className={inputClass}
+                  />
+                </div>
+
+                <div className="mt-5">
+                  <label htmlFor="correction-comment" className={labelClass}>
+                    Explanation
+                  </label>
+
+                  <textarea
+                    id="correction-comment"
+                    value={comment}
+                    onChange={(event) => setComment(event.target.value)}
+                    rows={4}
+                    maxLength={2000}
+                    placeholder="Explain why this information needs correcting."
+                    className={inputClass}
+                  />
+                </div>
 
                 <button
                   type="button"
@@ -300,27 +365,20 @@ export default function EmployeeDashboard() {
                   onClick={() =>
                     void submitVerification("CORRECTION_REQUESTED")
                   }
-                  style={{
-                    display: "block",
-                    width: "100%",
-                    padding: "14px",
-                    marginTop: "16px",
-                    backgroundColor: "#1e293b",
-                    color: "#ffffff",
-                    fontWeight: "bold",
-                    borderRadius: "8px",
-                    border: "2px solid #1e293b",
-                    cursor: submitting ? "wait" : "pointer",
-                  }}
+                  className="mt-6 w-full rounded-lg border border-white bg-white px-4 py-4 text-sm font-bold tracking-wide text-black transition hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {submitting
-                    ? "Submitting..."
+                    ? "SUBMITTING..."
                     : "SUBMIT CORRECTION REQUEST"}
                 </button>
               </div>
             </section>
           </>
         )}
+
+        <footer className="mt-8 pb-4 text-center text-xs tracking-wide text-gray-600">
+          HRMS Data Quality System © 2026
+        </footer>
       </div>
     </main>
   );
